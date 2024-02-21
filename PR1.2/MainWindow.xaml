@@ -1,33 +1,23 @@
-﻿<Window x:Class="PR1._2.MainWindow"
+<Window x:Class="PR1._2.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Крестики-нолики" Height="450" Width="450">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PR1._2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="button1" Grid.Row="0" Grid.Column="0" Click="Button_Click"/>
-            <Button x:Name="button2" Grid.Row="0" Grid.Column="1" Click="Button_Click"/>
-            <Button x:Name="button3" Grid.Row="0" Grid.Column="2" Click="Button_Click"/>
-            <Button x:Name="button4" Grid.Row="1" Grid.Column="0" Click="Button_Click"/>
-            <Button x:Name="button5" Grid.Row="1" Grid.Column="1" Click="Button_Click"/>
-            <Button x:Name="button6" Grid.Row="1" Grid.Column="2" Click="Button_Click"/>
-            <Button x:Name="button7" Grid.Row="2" Grid.Column="0" Click="Button_Click"/>
-            <Button x:Name="button8" Grid.Row="2" Grid.Column="1" Click="Button_Click"/>
-            <Button x:Name="button9" Grid.Row="2" Grid.Column="2" Click="Button_Click"/>
-        </Grid>
-        <Button x:Name="resetButton" Grid.Row="1" Content="Начать заново" Click="ResetButton_Click" Margin="0,10"/>
+        <Button x:Name="StartGame" Content="Играть" HorizontalAlignment="Left" Height="35" Margin="319,18,0,0" VerticalAlignment="Top" Width="94" FontSize="14" Click="Start_Igra" Background="#FFD73B3B" Foreground="White" BorderBrush="#FFDD4242"/>
+        <Button x:Name="Buton1" HorizontalAlignment="Left" Height="95" Margin="240,66,0,0" VerticalAlignment="Top" Width="95" RenderTransformOrigin="1.555,1.306" Click="Button_Click" FontSize="24" Background="Orange"/>
+        <Button x:Name="Buton2" HorizontalAlignment="Left" Height="95" Margin="335,67,0,0" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.252,0.565" Click="Button_Click" FontSize="24" Background="Orange"/>
+        <Button x:Name="Buton3" HorizontalAlignment="Left" Height="96" Margin="430,66,0,0" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.166,0.77" Click="Button_Click" FontSize="24" Background="Orange"/>
+        <Button x:Name="Buton4" HorizontalAlignment="Left" Height="95" Margin="240,161,0,0" VerticalAlignment="Top" Width="95" Click="Button_Click" FontSize="24" Background="Orange"/>
+        <Button x:Name="Buton5" HorizontalAlignment="Left" Height="95" Margin="335,161,0,0" VerticalAlignment="Top" Width="95" Click="Button_Click" FontSize="24" Background="Orange"/>
+        <Button x:Name="Buton6" HorizontalAlignment="Left" Height="95" Margin="430,161,0,0" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.2,0.269" Click="Button_Click" FontSize="24" Background="Orange"/>
+        <Button x:Name="Buton7" HorizontalAlignment="Left" Height="95" Margin="240,256,0,0" VerticalAlignment="Top" Width="95" Click="Button_Click" FontSize="24" Background="Orange"/>
+        <Button x:Name="Buton8" HorizontalAlignment="Left" Height="95" Margin="335,256,0,0" VerticalAlignment="Top" Width="95" Click="Button_Click" FontSize="24" Background="Orange"/>
+        <Button x:Name="Buton9" HorizontalAlignment="Left" Height="95" Margin="430,256,0,0" VerticalAlignment="Top" Width="95" Click="Button_Click" FontSize="24" Background="Orange"/>
+        <TextBlock x:Name="Win" HorizontalAlignment="Left" Height="56" Margin="288,353,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontSize="24" TextAlignment="Center" IsEnabled="False" Foreground="#FFA96262" Background="#FFD99A9A"/>
+
     </Grid>
 </Window>
