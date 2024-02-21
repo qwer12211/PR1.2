@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,174 +11,148 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-namespace s
+namespace PR1
 {
     public partial class MainWindow : Window
     {
-        private bool isPlayerXTurn;
-        private bool isGameOver;
-
+        private string vivod;
+        public int I, M, G;
+        public Button[] buttons = new Button[9];
         public MainWindow()
         {
             InitializeComponent();
-            InitializeGame();
+            buttons = new Button[] { Buton1, Buton2, Buton3, Buton4, Buton5, Buton6, Buton7, Buton8, Buton9 };
+            Block();
         }
 
-        private void InitializeGame()
-        {
-            isPlayerXTurn = true;
-            isGameOver = false;
-
-            foreach (var button in grid.Children)
-            {
-                if (button is Button gameButton)
-                {
-                    gameButton.Content = string.Empty;
-                    gameButton.IsEnabled = true;
-                }
-            }
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (isGameOver)
-                return;
+            (sender as Button).Content = "x";
 
-            var button = (Button)sender;
+            (sender as Button).IsEnabled = false;
 
-            if (button.Content != null && button.Content.ToString() != string.Empty)
-                return;
+            SloznayaProverka();
+            Proverochka();
 
-            button.Content = isPlayerXTurn ? "X" : "O";
-            button.IsEnabled = false;
-
-            if (CheckForWinner())
+            if (CheckIfEverythingIsBlocked() != 9)
             {
-                isGameOver = true;
-                MessageBox.Show($"Игрок {(isPlayerXTurn ? "X" : "O")} победил!");
-            }
-            else if (CheckForDraw())
-            {
-                isGameOver = true;
-                MessageBox.Show("Ничья!");
-            }
-            else
-            {
-                isPlayerXTurn = !isPlayerXTurn;
-                if (!isPlayerXTurn)
-                    MakeRobotMove();
+                Random();
+                ProverkaNolik();
+                Proverochka();
             }
         }
-
-        private bool CheckForWinner()
+        private void Start_Igra(object sender, RoutedEventArgs e)
         {
-            // Проверка всех возможных комбинаций для победы
-            string[,] board = new string[3, 3]
+            I++;
+            foreach (Button button in buttons)
             {
-                { GetButtonContent(button1), GetButtonContent(button2), GetButtonContent(button3) },
-                { GetButtonContent(button4), GetButtonContent(button5), GetButtonContent(button6) },
-                { GetButtonContent(button7), GetButtonContent(button8), GetButtonContent(button9) }
-            };
+                button.IsEnabled = true;
+                button.Content = "";
+            }
+            Win.Text = "";
+            M = 0;
+            G = 0;
 
-            // Проверка горизонтальных линий
+
+        }
+        public void SloznayaProverka()
+        {
+            string[,] board = new string[3, 3];
+
+
+            board[0, 0] = Buton1.Content.ToString();
+            board[0, 1] = Buton2.Content.ToString();
+            board[0, 2] = Buton3.Content.ToString();
+            board[1, 0] = Buton4.Content.ToString();
+            board[1, 1] = Buton5.Content.ToString();
+            board[1, 2] = Buton6.Content.ToString();
+            board[2, 0] = Buton7.Content.ToString();
+            board[2, 1] = Buton8.Content.ToString();
+            board[2, 2] = Buton9.Content.ToString();
+
             for (int i = 0; i < 3; i++)
             {
-                if (board[i, 0] != null && board[i, 0] == board[i, 1] && board[i, 1] == board[i, 2])
-                    return true;
+                if (board[i, 0] == "x" && board[i, 1] == "x" && board[i, 2] == "x" ||
+                    board[0, i] == "x" && board[1, i] == "x" && board[2, i] == "x")
+                {
+                    Win.Text = "Выйграл крестик";
+                    Block();
+                    return;
+                }
             }
 
-            // Проверка вертикальных линий
-            for (int i = 0; i < 3; i++)
+            if (board[0, 0] == "x" && board[1, 1] == "x" && board[2, 2] == "x" ||
+                board[0, 2] == "x" && board[1, 1] == "x" && board[2, 0] == "x")
             {
-                if (board[0, i] != null && board[0, i] == board[1, i] && board[1, i] == board[2, i])
-                    return true;
+                Win.Text = "Выйграл крестик";
+                Block();
+                return;
             }
-
-            // Проверка диагональных линий
-            if (board[0, 0] != null && board[0, 0] == board[1, 1] && board[1, 1] == board[2, 2])
-                return true;
-
-            if (board[2, 0] != null && board[2, 0] == board[1, 1] && board[1, 1] == board[0, 2])
-                return true;
-
-            return false;
         }
 
-        private bool CheckForDraw()
+        public void ProverkaNolik()
         {
-            foreach (var button in grid.Children)
+            if ((Buton1.Content == "o" && Buton2.Content == "o" && Buton3.Content == "o") ||
+                (Buton4.Content == "o" && Buton7.Content == "o" && Buton1.Content == "o") ||
+                (Buton5.Content == "o" && Buton2.Content == "o" && Buton8.Content == "o") ||
+                (Buton5.Content == "o" && Buton4.Content == "o" && Buton6.Content == "o") ||
+                (Buton5.Content == "o" && Buton1.Content == "o" && Buton9.Content == "o") ||
+                (Buton5.Content == "o" && Buton3.Content == "o" && Buton7.Content == "o") ||
+                (Buton9.Content == "o" && Buton6.Content == "o" && Buton3.Content == "o") ||
+                (Buton9.Content == "o" && Buton8.Content == "o" && Buton7.Content == "o"))
             {
-                if (button is Button gameButton && gameButton.Content == null || gameButton.Content.ToString() == string.Empty)
-                    return false;
+                Win.Text = "Выйграл нолик";
+                Block();
             }
-
-            return true;
         }
 
-        private string GetButtonContent(Button button)
+        private int CheckIfEverythingIsBlocked()
         {
-            if (button.Content != null)
-                return button.Content.ToString();
-
-            return null;
+            int G = 0;
+            foreach (Button button in buttons)
+            {
+                if (!button.IsEnabled)
+                {
+                    G++;
+                }
+            }
+            return G;
+        }
+        public void Proverochka()
+        {
+            if (CheckIfEverythingIsBlocked() == 9 && Win.Text != "Выйграл нолик" && Win.Text != "Выйграл крестик")
+            {
+                Win.Text = "Ничья";
+                Block();
+            }
         }
 
-        private void MakeRobotMove()
+        public void Random()
         {
-            // Ваша логика хода робота
-            // Можно использовать случайный выбор кнопки или другие алгоритмы
-            // В данном примере робот выбирает случайную доступную кнопку
-
             Random random = new Random();
-            Button[] availableButtons = GetAvailableButtons();
-
-            if (availableButtons.Length > 0)
+            while (true)
             {
-                int index = random.Next(0, availableButtons.Length);
-                availableButtons[index].Content = "O";
-                availableButtons[index].IsEnabled = false;
-
-                if (CheckForWinner())
+                int value = random.Next(0, 9);
+                if (buttons[value].IsEnabled == true)
                 {
-                    isGameOver = true;
-                    MessageBox.Show("Робот победил!");
+                    buttons[value].Content = "o";
+                    buttons[value].IsEnabled = false;
+                    M++;
+                    return;
                 }
-                else if (CheckForDraw())
+                else if (M == 4)
                 {
-                    isGameOver = true;
-                    MessageBox.Show("Ничья!");
-                }
-                else
-                {
-                    isPlayerXTurn = true;
+                    break;
                 }
             }
         }
-
-        private Button[] GetAvailableButtons()
+        public void Block()
         {
-            var buttons = new Button[]
+            foreach (Button button in buttons)
             {
-                button1, button2, button3,
-                button4, button5, button6,
-                button7, button8, button9
-            };
-
-            var availableButtons = new System.Collections.Generic.List<Button>();
-
-            foreach (var button in buttons)
-            {
-                if (button.Content == null || button.Content.ToString() == string.Empty)
-                    availableButtons.Add(button);
+                button.IsEnabled = false;
             }
-
-            return availableButtons.ToArray();
-        }
-
-        private void ResetButton_Click(object sender, RoutedEventArgs e)
-        {
-            InitializeGame();
         }
     }
 }
