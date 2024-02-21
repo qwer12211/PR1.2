@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PR1
+namespace PR1._2
 {
     public partial class MainWindow : Window
     {
